@@ -58,8 +58,8 @@
   import { SECTION_MAP, SITE_URL, SOCIAL_LINK } from 'src/constants'
   import { find, get, map } from 'lodash'
   import { microAds } from 'src/constants/microAds'
-  import ArticleBody from 'src/components/article/ArticleBody.vue'
-  import ArticleBodyPhotography from 'src/components/article/ArticleBodyPhotography.vue'
+  // import ArticleBody from 'src/components/article/ArticleBody.vue'
+  // import ArticleBodyPhotography from 'src/components/article/ArticleBodyPhotography.vue'
   import Footer from 'src/components/Footer.vue'
   import LazyItemWrapper from 'src/components/common/LazyItemWrapper.vue'
   import Newsletter from 'src/components/Newsletter.vue'
@@ -67,6 +67,9 @@
   import RecommendList from 'src/components/article/RecommendList.vue'
   import PopList from 'src/components/article/PopList.vue'
   import verge from 'verge'
+
+  const ArticleBody = () => import('src/components/article/ArticleBody.vue')
+  const ArticleBodyPhotography = () => import('src/components/article/ArticleBodyPhotography.vue')
 
   export default {
     name: 'ArticleBodyContainer',
@@ -98,9 +101,7 @@
         return get(this.$store, 'state.articlesPopList.report', [])
       },
       recommendlist () {
-        // return get(this.$store, 'state.articlesRecommendList.relatedNews', [])
-        const items = get(this.articleData, 'relateds', []) || []
-        return items.filter(item => item)
+        return get(this.$store, 'state.articlesRecommendList.relatedNews', [])
       },
       tags () {
         const tags = get(this.articleData, 'tags', [])
