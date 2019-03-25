@@ -42,13 +42,17 @@
         </div>
       </div>
       </div>
-      <vue-dfp v-if="index === 2" :is="props.vueDfp" pos="LMBSL1" extClass="mobile-only" :config="props.config" />
+      <LazyItemWrapper :position="viewpostH" :strict="true" v-if="index === 2" >
+        <vue-dfp :is="props.vueDfp" pos="LMBSL1" extClass="mobile-only" :config="props.config" />
+      </LazyItemWrapper>
     </template>
     </div>
   </div>
 
   <div class="topicsArticle-foodtravel-container desktop-only" v-if="!this.showLatestOnly">
-    <vue-dfp :is="props.vueDfp" pos="LPCSR1" extClass="mobile-hide" :config="props.config" />
+    <LazyItemWrapper :position="viewpostH" :strict="true">
+      <vue-dfp :is="props.vueDfp" pos="LPCSR1" extClass="mobile-hide" :config="props.config" />
+    </LazyItemWrapper>
     <div class="topicsArticle-full-posts">
     <template v-for="(article, index) in topics">
       <div class="topicsArticle-full-post">
@@ -72,8 +76,9 @@
 </template>
 
 <script>
-import { SECTION_FOODTRAVEL_ID } from '../constants/index'
+import LazyItemWrapper from 'src/components/common/LazyItemWrapper.vue'
 import ItemsTitleRect from './ItemsTitleRect.vue'
+import { SECTION_FOODTRAVEL_ID } from '../constants/index'
 import {
   getAuthor,
   getBrief,
@@ -81,20 +86,20 @@ import {
   getImage,
   getTruncatedVal
 } from '../util/comm'
-import moment from 'moment'
+
 export default {
   name: 'latestArticle-foodtravel',
   props: [ 'articles', 'props', 'commonData', 'showLatestOnly' ],
   components: {
-    'items-title-rect': ItemsTitleRect
+    'items-title-rect': ItemsTitleRect,
+    LazyItemWrapper
   },
   methods: {
     getAuthor,
     getBrief,
     getHref,
     getImage,
-    getTruncatedVal,
-    moment
+    getTruncatedVal
   },
   computed: {
     latestArticle () {
@@ -104,6 +109,9 @@ export default {
       return this.commonData.topics.items.filter((o) => {
         if (o.hasOwnProperty('sections')) return o.sections[0] === SECTION_FOODTRAVEL_ID // foodtravel
       })
+    },
+    viewpostH () {
+      return this.$store.state.viewport.height
     }
   }
 }
