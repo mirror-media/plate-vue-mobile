@@ -1,10 +1,12 @@
 <template>
   <div class="content">
-    <LazyItemWrapper v-for="(p, index) in content"
+    <LazyItemWrapper
+      v-for="(p, index) in content"
       class="content-item"
       :class="{ last: index ===  content.length - 1}"
       :key="`${id}-content-${index}`"
-      :position="verge.viewportH()">
+      :position="verge.viewportH()"
+    >
       <ArticleImg v-if="p.type === 'image'" :image="get(p, 'content.0')" class="innerImg" />
       <ArticleVideo v-else-if="p.type === 'video'" :id="`latest-${p.id}`"
         :video="get(p, 'content.0', {})" class="video" />
@@ -34,8 +36,11 @@
       <p v-if="updatedAt && publishedDate && (index ===  content.length - 1) && showUpdatedTime" class="updated-time">更新時間｜
         <span>{{ moment(updatedAt).format('YYYY.MM.DD HH:mm') }}</span>
       </p>
+      <slot
+        v-if="!isBrief && index === 0"
+        name="ADAR1"
+      />
     </LazyItemWrapper>
-    <slot v-if="isBrief" name="ADAR1"></slot>
   </div>
 </template>
 <script>
