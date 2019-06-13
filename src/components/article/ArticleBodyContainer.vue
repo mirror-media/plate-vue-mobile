@@ -21,6 +21,8 @@
         :recommends="recommendlist"
         :excludingArticle="routeUpateReferrerSlug"
       />
+      <!-- ADAR3 above Newsletter and below RecommendList -->
+      <slot name="ADAR3"/>
       <Newsletter />
       <div class="news-letter-label">更多內容，歡迎
         <a :href="SOCIAL_LINK.SUBSCRIBE" target="_blank">訂閱鏡週刊</a>、
