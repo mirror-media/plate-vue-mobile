@@ -31,6 +31,10 @@
         name="ADAR1"
         slot="ADAR1"
       />
+      <slot
+        name="ADAR2"
+        slot="ADAR2"
+      />
       <RelatedListInContent
         :relateds="relateds"
         slot="relatedListInContent"

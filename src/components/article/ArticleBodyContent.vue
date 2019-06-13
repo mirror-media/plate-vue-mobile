@@ -32,13 +32,22 @@
         <Annotation :annotationStr="get(p, 'content')" />
       </div>
       <div v-else v-html="paragraphComposer(p)" :style="{ backgroundColor: isBrief && bgcolor }"></div>
-      <slot v-if="!isBrief && index === lastUnstyledParagraph - 1" name="relatedListInContent"></slot>
+      <slot
+        v-if="!isBrief && index === lastUnstyledParagraph - 1"
+        name="relatedListInContent"
+      />
       <p v-if="updatedAt && publishedDate && (index ===  content.length - 1) && showUpdatedTime" class="updated-time">更新時間｜
         <span>{{ moment(updatedAt).format('YYYY.MM.DD HH:mm') }}</span>
       </p>
+      <!-- ADAR1 below 1st non-empty paragraph -->
       <slot
-        v-if="!isBrief && index === 0"
+        v-if="shouldShowADAR1 && index === nonEmptyParagraphsIndexs[0]"
         name="ADAR1"
+      />
+      <!-- ADAR2 below 5th non-empty paragraph -->
+      <slot
+        v-if="shouldShowADAR2 && index === nonEmptyParagraphsIndexs[4]"
+        name="ADAR2"
       />
     </LazyItemWrapper>
   </div>
@@ -67,20 +76,19 @@
       Slider
     },
     computed: {
-      firstTwoUnstyledParagraph () {
-        const records = []
-        let count = 0
-        let index = 0
-        let lastUnstyled = 0
-        while (count < 2 && index < this.content.length) {
-          if (get(this.content, `${index}.type`) === 'unstyled' && (lastUnstyled + 4) < index) {
-            count++
-            lastUnstyled = index
-            records.push(index)
-          }
-          index++
-        }
-        return records
+      nonEmptyParagraphsIndexs () {
+        const isContentParagraph = obj => obj.type === 'unstyled' && obj.content.join('') !== ''
+        return this.content
+          // Preserve original index
+          .map((d, i) => ({ index: i, type: d.type, content: d.content || [] }))
+          .filter(obj => isContentParagraph(obj))
+          .map(d => d.index)
+      },
+      shouldShowADAR1 () {
+        return !this.isBrief && get(this.nonEmptyParagraphsIndexs, 0, -1) !== -1
+      },
+      shouldShowADAR2 () {
+        return !this.isBrief && get(this.nonEmptyParagraphsIndexs, 4, -1) !== -1
       },
       lastUnstyledParagraph () {
         const regex = /^<\s*a[^>]*>/

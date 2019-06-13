@@ -1,9 +1,16 @@
 <template>
   <div class="article-body-container article-container" v-if="articleStyle !== 'photography'">
     <ArticleBody :articleData="articleData" :dfpMode="dfpMode" :articleUrl="articleUrl">
-      <slot name="ADAR1" slot="ADAR1" ></slot> 
+      <slot
+        name="ADAR1"
+        slot="ADAR1"
+      />
+      <slot
+        name="ADAR2"
+        slot="ADAR2"
+      />
     </ArticleBody>
-    <slot name="ADAR2"></slot>
+    <!-- <slot name="ADAR2"></slot> -->
     <LazyItemWrapper :position="verge.viewportH()">
       <RecommendList
         v-if="!isAd"
