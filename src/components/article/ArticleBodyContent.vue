@@ -91,14 +91,7 @@
         return !this.isBrief && get(this.nonEmptyParagraphsIndexs, 4, -1) !== -1
       },
       lastUnstyledParagraph () {
-        const regex = /^<\s*a[^>]*>/
-        let last = this.content.length - 1
-        this.content.map((content, index) => {
-          if (content.type === 'unstyled' && content.content[0] && !content.content[0].match(regex)) {
-            last = index
-          }
-        })
-        return last
+        return get(this.nonEmptyParagraphsIndexs, this.nonEmptyParagraphsIndexs.length, 0)
       },
       showUpdatedTime () {
         return moment(this.updatedAt).format('YYYY.MM.DD HH:mm') !== moment(this.publishedDate).format('YYYY.MM.DD HH:mm')
