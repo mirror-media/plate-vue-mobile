@@ -45,10 +45,7 @@
           :currEnv="dfpMode" :currUrl="articleUrl"
           :id="`${get(ad, 'pcId')}`"
           :key="`${get(ad, 'pcId')}`"
-        />
-        <PopInAd>
-          <div id="_popIn_recommend"></div>
-        </PopInAd>
+        /> 
       </RelatedListInContent>
     </ArticleBodyContent>
   </main>
@@ -63,7 +60,6 @@
   import HeroImage from 'src/components/article/HeroImage.vue'
   import HeroVideo from 'src/components/article/HeroVideo.vue'
   import MicroAd from 'src/components/MicroAd.vue'
-  import PopInAd from 'src/components/PopInAd.vue'
   import RelatedListInContent from 'src/components/article/RelatedListInContent.vue'
   import ShareLight from 'src/components/share/ShareLight.vue'
   import moment from 'moment'
@@ -76,7 +72,6 @@
       HeroImage,
       HeroVideo,
       MicroAd,
-      PopInAd,
       RelatedListInContent,
       ShareLight,
     },
