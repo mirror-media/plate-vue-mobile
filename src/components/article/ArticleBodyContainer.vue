@@ -49,11 +49,11 @@
         <slot name="ADE1"></slot>
       </div>
       <div class="google-recommendeds">
-        <div v-if="abIndicator !== 'B'" class="title"><h3>推薦文章</h3></div>
-        <div v-if="abIndicator !== 'B'" id="matchedContentContainer" class="matchedContentContainer"></div>
-        <div v-if="abIndicator === 'B'" id="dablewidget_6XgaOJ7N" data-widget_id="6XgaOJ7N"></div>
+        <!-- <div v-if="abIndicator !== 'B'" class="title"><h3>推薦文章</h3></div> -->
+        <!-- <div v-if="abIndicator !== 'B'" id="matchedContentContainer" class="matchedContentContainer"></div> -->
+        <div id="dablewidget_6XgaOJ7N" data-widget_id="6XgaOJ7N"></div>
       </div>
-      <PopList :abIndicator="abIndicator" :pop="popularlist" v-if="isPoplistActive" :currEnv="dfpMode"></PopList>
+      <PopList :pop="popularlist" v-if="isPoplistActive" :currEnv="dfpMode"></PopList>
       <div class="facebook-comments" v-html="fbBlock"></div>
     <!-- </LazyItemWrapper> -->
   </div>
@@ -125,10 +125,6 @@
       sendGaClickEvent
     },
     props: {
-      abIndicator: {
-        type: String,
-        default: 'A'
-      },
       articleData: {},
       dfpMode: {},
       sectionId: {},
