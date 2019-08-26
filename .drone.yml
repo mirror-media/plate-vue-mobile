@@ -84,7 +84,8 @@ pipeline:
       branch: master
 
   builds:
-    image: gcr.io/mirrormedia-1470651750304/plate-vue-mobile:node-10.15.3-builder
+    # image: gcr.io/mirrormedia-1470651750304/plate-vue-mobile:node-10.15.3-builder
+    image: node:10.15.3
     commands:
       - npm install
       - npm run build
