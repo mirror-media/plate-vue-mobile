@@ -60,16 +60,16 @@ pipeline:
       event: push
       branch: master
 
-  restore-cache:
-    image: drillster/drone-volume-cache
-    restore: true
-    mount:
-      - ./node_modules
-    volumes:
-      - /tmp/cache:/cache
-    when:
-      event: push
-      branch: master
+  # restore-cache:
+  #   image: drillster/drone-volume-cache
+  #   restore: true
+  #   mount:
+  #     - ./node_modules
+  #   volumes:
+  #     - /tmp/cache:/cache
+  #   when:
+  #     event: push
+  #     branch: master
 
   get-config:
     image: gcr.io/mirrormedia-1470651750304/drone-cloud-sdk:latest
@@ -105,16 +105,16 @@ pipeline:
       event: push
       branch: master
 
-  rebuild-cache:
-    image: drillster/drone-volume-cache
-    rebuild: true
-    mount:
-      - ./node_modules
-    volumes:
-      - /tmp/cache:/cache
-    when:
-      event: push
-      branch: master
+  # rebuild-cache:
+  #   image: drillster/drone-volume-cache
+  #   rebuild: true
+  #   mount:
+  #     - ./node_modules
+  #   volumes:
+  #     - /tmp/cache:/cache
+  #   when:
+  #     event: push
+  #     branch: master
 
   download-charts:
     image: gcr.io/mirrormedia-1470651750304/drone-cloud-sdk:latest
