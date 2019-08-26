@@ -102,6 +102,7 @@ pipeline:
       - DOCKER_LAUNCH_DEBUG=true
     secrets: [google_credentials]
     dockerfile: docker/Dockerfile.stage
+    build_args: NODE_BASE=10-alpine
     when:
       event: push
       branch: master
