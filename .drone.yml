@@ -88,7 +88,7 @@ pipeline:
     image: node:10-slim
     commands:
       - apt-get update
-      - apt-get install python make g++
+      - apt-get install -y python make g++
       - npm install
       - npm run build
     when:
