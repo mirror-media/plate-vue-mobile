@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:10.15-slim
 
 RUN groupadd user && useradd --create-home --home-dir /home/user -g user user
 

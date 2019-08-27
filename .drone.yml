@@ -4,48 +4,48 @@ workspace:
 pipeline:
   # Start build node builder for plate-vue-mobile
   # --------------------------------- Build node-builder image: Push to builder branch ---------------------------
-  builder-start:
-    image: plugins/slack
-    channel: jenkins
-    secrets: [slack_webhook]
-    username: drone
-    icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
-    template: >
-      {{build.author}} {{build.event}} ${DRONE_COMMIT_SHA:0:7} to *{{repo.name}}:{{build.branch}}*.
-      Start to build <${DRONE_BUILD_LINK}|node-builder>
-    when:
-      event: push
-      branch: builder
+  # builder-start:
+  #   image: plugins/slack
+  #   channel: jenkins
+  #   secrets: [slack_webhook]
+  #   username: drone
+  #   icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+  #   template: >
+  #     {{build.author}} {{build.event}} ${DRONE_COMMIT_SHA:0:7} to *{{repo.name}}:{{build.branch}}*.
+  #     Start to build <${DRONE_BUILD_LINK}|node-builder>
+  #   when:
+  #     event: push
+  #     branch: builder
 
-  publish:
-    image: plugins/gcr
-    repo: mirrormedia-1470651750304/${DRONE_REPO_NAME}
-    tag:
-    - node-10.15.3-builder
-    build_args: NODE_BASE=10.15.3-alpine
-    dockerfile: docker/Dockerfile.builder
-    environment:
-      - DOCKER_LAUNCH_DEBUG=true
-    secrets: [google_credentials]
-    when:
-      event: push
-      branch: builder
+  # publish:
+  #   image: plugins/gcr
+  #   repo: mirrormedia-1470651750304/${DRONE_REPO_NAME}
+  #   tag:
+  #   - node-10.15.3-builder
+  #   build_args: NODE_BASE=10-slim
+  #   dockerfile: docker/Dockerfile.builder
+  #   environment:
+  #     - DOCKER_LAUNCH_DEBUG=true
+  #   secrets: [google_credentials]
+  #   when:
+  #     event: push
+  #     branch: builder
 
-  builder-finish:
-    image: plugins/slack
-    channel: jenkins
-    secrets: [slack_webhook]
-    username: drone
-    icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
-    when:
-      event: push
-      branch: builder
-    template: >
-      {{#success build.status}}
-        plate-vue-mobile:node-10.15.3-builder was successfully built.
-      {{else}}
-        Houston, we have a problem. <${DRONE_BUILD_LINK}|node-builder> failed.
-      {{/success}}
+  # builder-finish:
+  #   image: plugins/slack
+  #   channel: jenkins
+  #   secrets: [slack_webhook]
+  #   username: drone
+  #   icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+  #   when:
+  #     event: push
+  #     branch: builder
+  #   template: >
+  #     {{#success build.status}}
+  #       plate-vue-mobile:node-10.15.3-builder was successfully built.
+  #     {{else}}
+  #       Houston, we have a problem. <${DRONE_BUILD_LINK}|node-builder> failed.
+  #     {{/success}}
   # -------------------------------------------- Release to Dev pipeline: Push to master  -----------------------------------------------
   push-start:
     image: plugins/slack
@@ -85,8 +85,9 @@ pipeline:
 
   builds:
     # image: gcr.io/mirrormedia-1470651750304/plate-vue-mobile:node-10.15.3-builder
-    image: node:10-alpine
+    image: node:10-slim
     commands:
+      - apt-get --update --no-cache install python make g++
       - npm install
       - npm run build
     when:
@@ -102,7 +103,7 @@ pipeline:
       - DOCKER_LAUNCH_DEBUG=true
     secrets: [google_credentials]
     dockerfile: docker/Dockerfile.stage
-    build_args: NODE_BASE=10-alpine
+    build_args: NODE_BASE=10-slim
     when:
       event: push
       branch: master
